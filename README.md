@@ -5,16 +5,16 @@ Enterprise-grade infrastructure built and managed from scratch.
 ## Architecture
 
 ```
-Internet → OPNsense Firewall
-    ├── VLAN10 (LAN)
-    │   ├── Pi-hole (DNS — primary + backup)
-    │   ├── Homelab Server (Proxmox — main host)
-    │   ├── Grafana + Prometheus (monitoring)
-    │   ├── Open WebUI (ai.clarkelab.dev)
-    │   ├── Vaultwarden (vault.clarkelab.dev)
-    │   └── Nginx Proxy Manager (reverse proxy)
-    ├── VLAN02 (SERVERS)
-    └── VLAN03 (IOT)
+Internet → OPNsense Firewall (10.0.0.1)
+    ├── VLAN10 (LAN) — 10.0.10.0/24
+    │   ├── .10 — Pi-hole (DNS — primary + backup)
+    │   ├── .20 — Homelab Server (Proxmox — main host)
+    │   ├── .30 — Grafana + Prometheus (monitoring)
+    │   ├── .40 — Open WebUI (ai.clarkelab.dev)
+    │   ├── .50 — Vaultwarden (vault.clarkelab.dev)
+    │   └── .60 — Nginx Proxy Manager (reverse proxy)
+    ├── VLAN02 (SERVERS) — 10.0.20.0/24
+    └── VLAN03 (IOT) — 10.0.30.0/24
 ```
 
 ## Hardware
