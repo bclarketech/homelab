@@ -5,28 +5,28 @@ Enterprise-grade infrastructure built and managed from scratch.
 ## Architecture
 
 ```
-Internet → OPNsense Firewall (172.16.10.1)
-    ├── VLAN10 (LAN) — 172.16.10.0/24
-    │   ├── .135 — Pi-hole (DNS)
-    │   ├── .136 — Homelab Server (Proxmox)
-    │   ├── .146 — Grafana + Prometheus
-    │   ├── .106 — Open WebUI (ai.clarkelab.dev)
-    │   ├── .118 — Vaultwarden (vault.clarkelab.dev)
-    │   └── .150 — Nginx Proxy Manager
-    ├── VLAN02 (SERVERS) — 172.16.20.0/24
-    └── VLAN03 (IOT) — 172.16.30.0/24
+Internet → OPNsense Firewall
+    ├── VLAN10 (LAN)
+    │   ├── Pi-hole (DNS — primary + backup)
+    │   ├── Homelab Server (Proxmox — main host)
+    │   ├── Grafana + Prometheus (monitoring)
+    │   ├── Open WebUI (ai.clarkelab.dev)
+    │   ├── Vaultwarden (vault.clarkelab.dev)
+    │   └── Nginx Proxy Manager (reverse proxy)
+    ├── VLAN02 (SERVERS)
+    └── VLAN03 (IOT)
 ```
 
 ## Hardware
 
-| Device | Role | Location |
-|--------|------|----------|
-| Lenovo M710q (i7, 16GB, 2x10G SFP+) | OPNsense Firewall | 172.16.10.1 |
-| Proxmox Homelab (.233) | Main server, Suricata IDS | LXC/VM host |
-| Proxmox K-Cluster (.234) | Kubernetes cluster | LXC/VM host |
-| Proxmox GamingServer (.235) | GPU workloads, mining | LXC/VM host |
-| Cisco 3850 (clab-core01) | Core switch, VLANs | 172.16.10.2 |
-| Synology DS920+ "Cheesecake" | Storage, backups | 172.16.10.46 |
+| Device | Role |
+|--------|------|
+| Lenovo M710q (i7, 16GB, 2x10G SFP+) | OPNsense Firewall |
+| Proxmox Homelab | Main server, Suricata IDS |
+| Proxmox K-Cluster | Kubernetes cluster |
+| Proxmox GamingServer | GPU workloads, mining |
+| Cisco 3850 (clab-core01) | Core switch, VLANs |
+| Synology DS920+ "Cheesecake" | Storage, backups |
 
 ## Security Stack
 
@@ -43,7 +43,7 @@ Internet → OPNsense Firewall (172.16.10.1)
 
 ## Services
 
-- **Open WebUI** — AI interface (ai.clarkelab.dev)
+- **Open WebUI** — AI interface
 - **Nginx Proxy Manager** — Reverse proxy, SSL termination
 - **Home Assistant** — Smart home automation
 - **Pi-hole** — DNS ad-blocking
