@@ -11,6 +11,7 @@ Production-style K3s cluster running on one Proxmox-hosted control plane and fiv
 | Workers | Bare metal, Ubuntu 24.04 LTS | Full hardware access for workloads, no nested-virtualization tax |
 | Ingress | Traefik (K3s default) | Bundled, no extra install |
 | Storage | local-path provisioner (default) | Simple node-local volumes; Longhorn is the next step |
+| Management | **Rancher** + cert-manager | Web GUI, cluster health, and future GitOps |
 | Runtime | containerd 2.3.4-k3s1 | Bundled with K3s |
 
 > All addresses below are documentation placeholders on the lab's `10.0.10.0/24` service VLAN. Real addressing, tokens, and kubeconfigs are never committed.
@@ -110,6 +111,17 @@ sudo systemctl start k3s   # regenerates
 sudo cat /var/lib/rancher/k3s/server/node-token
 ```
 
+### Rancher management UI
+
+Rancher runs in the `cattle-system` namespace behind Traefik, with cert-manager issuing its certs:
+
+```bash
+sudo k3s kubectl get pods -n cattle-system
+sudo k3s kubectl get svc -n cattle-system rancher
+```
+
+Reachable at `https://rancher.<control-plane-ip>.sslip.io` — Traefik's LoadBalancer publishes 80/443 on the control plane and every worker, so any node IP serves the UI. The bootstrap admin password is set on first login and stored in the password manager; it is never documented in this repo.
+
 ### Upgrade
 K3s upgrades in place — bump the install channel or re-run the installer with the target version:
 
@@ -131,6 +143,6 @@ Workers first, control plane last.
 ## Next Steps
 
 - Longhorn for replicated block storage
-- Ingress + TLS via the existing Nginx Proxy Manager / cert-manager
-- Rancher for a GUI control plane
-- GitOps with Argo CD or Flux
+- TLS for lab apps via cert-manager + the existing Nginx Proxy Manager
+- GitOps with Fleet (bundled with Rancher), Argo CD, or Flux
+- Monitoring the cluster with the existing Prometheus/Grafana stack
