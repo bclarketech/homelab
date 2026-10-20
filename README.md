@@ -52,7 +52,7 @@ Internet → OPNsense Firewall (10.0.0.1)
 
 - Control plane runs in a privileged LXC with `/dev/kmsg` bound in, so the kubelet behaves exactly as it would on metal
 - Workers are Ubuntu 24.04 LTS agents joined with a shared node token
-- Traefik ingress and `local-path` storage come bundled; Longhorn and Rancher are the next additions
+- Traefik ingress and `local-path` storage come bundled; **Rancher** (with cert-manager) provides the GUI, and Longhorn is the next addition
 - Automated node provisioning via PXE (Ubuntu 24.04 autoinstall) + Ansible inventory
 
 See **[kubernetes/](./kubernetes/)** for topology, build steps, operations, and the pitfalls hit along the way.
